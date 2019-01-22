@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
   s.weak_framework = 'Speech'
 
-  s.ios.deployment_target = "8.0"
+  s.ios.deployment_target = "11.0"
 
   s.requires_arc = true
 

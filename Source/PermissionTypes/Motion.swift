@@ -29,16 +29,20 @@ private let MotionManager = CMMotionActivityManager()
 
 extension Permission {
     var statusMotion: PermissionStatus {
-        if UserDefaults.standard.requestedMotion {
-            return synchronousStatusMotion
+        guard CMMotionActivityManager.isActivityAvailable() else { return .disabled }
+
+        let status = CMMotionActivityManager.authorizationStatus()
+        switch status {
+        case .notDetermined:
+            return .notDetermined
+        case .restricted, .denied:
+            return .denied
+        case .authorized:
+            return .authorized
         }
-        
-        return .notDetermined
     }
     
     func requestMotion(_ callback: Callback?) {
-        UserDefaults.standard.requestedMotion = true
-        
         let now = Date()
         
         MotionManager.queryActivityStarting(from: now, to: now, to: OperationQueue.main) { activities, error in
@@ -54,31 +58,6 @@ extension Permission {
             
             callback?(status)
         }
-    }
-    
-    fileprivate var synchronousStatusMotion: PermissionStatus {
-        let semaphore = DispatchSemaphore(value: 0)
-        
-        var status: PermissionStatus = .notDetermined
-        
-        let now = Date()
-        
-        MotionManager.queryActivityStarting(from: now, to: now, to: OperationQueue(.background)) { activities, error in
-            if  let error = error , error._code == Int(CMErrorMotionActivityNotAuthorized.rawValue) {
-                status = .denied
-            } else {
-                status = .authorized
-            }
-            
-            MotionManager.stopActivityUpdates()
-            
-            semaphore.signal()
-        }
-        
-        
-        _ = semaphore.wait(timeout: DispatchTime.distantFuture)
-        
-        return status
     }
 }
 #endif

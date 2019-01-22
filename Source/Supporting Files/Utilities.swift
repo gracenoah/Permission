@@ -61,7 +61,6 @@ internal extension String {
     
     static let requestedNotifications               = "permission.requestedNotifications"
     static let requestedLocationAlwaysWithWhenInUse = "permission.requestedLocationAlwaysWithWhenInUse"
-    static let requestedMotion                      = "permission.requestedMotion"
     static let requestedBluetooth                   = "permission.requestedBluetooth"
     static let statusBluetooth                      = "permission.statusBluetooth"
     static let stateBluetoothManagerDetermined      = "permission.stateBluetoothManagerDetermined"
@@ -82,11 +81,6 @@ extension UserDefaults {
     var requestedNotifications: Bool {
         get { return bool(forKey: .requestedNotifications) }
         set { set(newValue, forKey: .requestedNotifications) }
-    }
-    
-    var requestedMotion: Bool {
-        get { return bool(forKey: .requestedMotion) }
-        set { set(newValue, forKey: .requestedMotion) }
     }
     
     var requestedBluetooth: Bool {
