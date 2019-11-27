@@ -25,14 +25,26 @@
 #if PERMISSION_BLUETOOTH
 import CoreBluetooth
 
-internal let BluetoothManager = CBPeripheralManager(
-    delegate: Permission.bluetooth,
-    queue: nil,
-    options: [CBPeripheralManagerOptionShowPowerAlertKey: false]
-)
+internal var BluetoothManager: CBPeripheralManager?
 
 extension Permission {
     var statusBluetooth: PermissionStatus {
+        if #available(iOS 13.1, *) {
+            switch CBManager.authorization {
+            case .notDetermined: return .notDetermined
+            case .restricted: return .disabled
+            case .denied: return .denied
+            case .allowedAlways: return .authorized
+            }
+        } else if #available(iOS 13.0, *) {
+            switch CBPeripheralManager().authorization {
+            case .notDetermined: return .notDetermined
+            case .restricted: return .disabled
+            case .denied: return .denied
+            case .allowedAlways: return .authorized
+            }
+        }
+
         switch CBPeripheralManager.authorizationStatus() {
         case .restricted: return .disabled
         case .denied: return .denied
@@ -41,7 +53,11 @@ extension Permission {
         
         guard UserDefaults.standard.stateBluetoothManagerDetermined else { return .notDetermined }
         
-        switch BluetoothManager.state {
+        instantiateBluetoothManager()
+        
+        guard let bluetoothManager = BluetoothManager else { return .disabled }
+        
+        switch bluetoothManager.state {
         case .unsupported, .poweredOff: return .disabled
         case .unauthorized: return .denied
         case .poweredOn: return .authorized
@@ -53,7 +69,26 @@ extension Permission {
     func requestBluetooth(_ callback: Callback?) {
         UserDefaults.standard.requestedBluetooth = true
         
-        BluetoothManager.request(self)
+        instantiateBluetoothManager()
+        
+        guard #available(iOS 13, *) else {
+            // iOS 13 and later display a permission dialog when creating the manager (above).
+            return
+        }
+
+        // Prior to iOS 13, to request permission one must start/stop advertising.
+        guard let bluetoothManager = BluetoothManager else { return }
+        guard case .poweredOn = bluetoothManager.state else { return }
+        bluetoothManager.startAdvertising(nil)
+        bluetoothManager.stopAdvertising()
+    }
+    
+    private func instantiateBluetoothManager() {
+        BluetoothManager = .init(
+            delegate: Permission.bluetooth,
+            queue: nil,
+            options: [CBPeripheralManagerOptionShowPowerAlertKey: false]
+        )
     }
 }
 
@@ -67,15 +102,6 @@ extension Permission: CBPeripheralManagerDelegate {
         callback?(statusBluetooth)
         
         UserDefaults.standard.requestedBluetooth = false
-    }
-}
-
-extension CBPeripheralManager {
-    func request(_ permission: Permission) {
-        guard case .poweredOn = state else { return }
-        
-        startAdvertising(nil)
-        stopAdvertising()
     }
 }
 #endif
