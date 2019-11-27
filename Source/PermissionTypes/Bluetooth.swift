@@ -45,6 +45,8 @@ extension Permission {
             }
         }
 
+        instantiateBluetoothManager()
+
         switch CBPeripheralManager.authorizationStatus() {
         case .restricted: return .disabled
         case .denied: return .denied
@@ -52,8 +54,6 @@ extension Permission {
         }
         
         guard UserDefaults.standard.stateBluetoothManagerDetermined else { return .notDetermined }
-        
-        instantiateBluetoothManager()
         
         guard let bluetoothManager = BluetoothManager else { return .disabled }
         
@@ -84,6 +84,8 @@ extension Permission {
     }
     
     private func instantiateBluetoothManager() {
+        guard BluetoothManager == nil else { return }
+
         BluetoothManager = .init(
             delegate: Permission.bluetooth,
             queue: nil,
