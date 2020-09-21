@@ -47,6 +47,12 @@ internal extension Permission {
                 status = .notDetermined
             case .provisional:
                 status = .denied
+            #if swift(>=5.3)
+            case .ephemeral:
+                status = .authorized
+            #endif
+            @unknown default:
+                status = .notDetermined
             }
             semaphore.signal()
         }
