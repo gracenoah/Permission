@@ -31,7 +31,7 @@ public enum PermissionType {
     #endif
     
     #if PERMISSION_ADDRESS_BOOK
-    case addressBook // Deprecated in iOS 9.0
+    @available(iOS, deprecated: 9.0) case addressBook // Deprecated in iOS 9.0
     #endif
     
     #if PERMISSION_LOCATION
@@ -44,7 +44,7 @@ public enum PermissionType {
     #endif
     
     #if PERMISSION_NOTIFICATIONS
-    case notifications(UIUserNotificationSettings) // Deprecated in iOS 10.0
+    @available(iOS, deprecated: 10.0) case notifications(UIUserNotificationSettings) // Deprecated in iOS 10.0
     #endif
     
     #if PERMISSION_MICROPHONE

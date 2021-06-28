@@ -35,6 +35,7 @@ extension Permission {
             case .restricted: return .disabled
             case .denied: return .denied
             case .allowedAlways: return .authorized
+            @unknown default: return .notDetermined
             }
         } else if #available(iOS 13.0, *) {
             switch CBPeripheralManager().authorization {
@@ -42,6 +43,7 @@ extension Permission {
             case .restricted: return .disabled
             case .denied: return .denied
             case .allowedAlways: return .authorized
+            @unknown default: return .notDetermined
             }
         }
 
@@ -51,6 +53,7 @@ extension Permission {
         case .restricted: return .disabled
         case .denied: return .denied
         case .notDetermined, .authorized: break
+        @unknown default: break
         }
         
         guard UserDefaults.standard.stateBluetoothManagerDetermined else { return .notDetermined }
@@ -63,6 +66,7 @@ extension Permission {
         case .poweredOn: return .authorized
         case .resetting, .unknown:
             return UserDefaults.standard.statusBluetooth ?? .notDetermined
+        @unknown default: return .notDetermined
         }
     }
     

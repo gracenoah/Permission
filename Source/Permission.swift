@@ -36,6 +36,7 @@ open class Permission: NSObject {
     
     #if PERMISSION_ADDRESS_BOOK
     /// The permission to access the user's address book. (Deprecated in iOS 9.0)
+    @available(iOS, deprecated: 9.0)
     public static let addressBook = Permission(type: .addressBook)
     #endif
     
@@ -126,6 +127,7 @@ open class Permission: NSObject {
     fileprivate static var _notifications: Permission?
     
     /// The permission to send notifications.
+    @available(iOS, deprecated: 10.0)
     public static let notifications: Permission = {
         let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
         _notifications = Permission(type: .notifications(settings))
@@ -133,6 +135,7 @@ open class Permission: NSObject {
     }()
     
     /// The permission to send notifications.
+    @available(iOS, deprecated: 10.0)
     public static func notifications(types: UIUserNotificationType, categories: Set<UIUserNotificationCategory>?) -> Permission {
         let settings = UIUserNotificationSettings(types: types, categories: categories)
         _notifications = Permission(type: .notifications(settings))
@@ -140,6 +143,7 @@ open class Permission: NSObject {
     }
     
     /// The permission to send notifications.
+    @available(iOS, deprecated: 10.0)
     public static func notifications(types: UIUserNotificationType) -> Permission {
         let settings   = UIUserNotificationSettings(types: types, categories: nil)
         _notifications = Permission(type: .notifications(settings))
@@ -147,6 +151,7 @@ open class Permission: NSObject {
     }
     
     /// The permission to send notifications.
+    @available(iOS, deprecated: 10.0)
     public static func notifications(categories: Set<UIUserNotificationCategory>?) -> Permission {
         let settings  = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: categories)
         _notifications = Permission(type: .notifications(settings))

@@ -39,6 +39,8 @@ extension Permission {
             return .denied
         case .authorized:
             return .authorized
+        @unknown default:
+            return .notDetermined
         }
     }
     

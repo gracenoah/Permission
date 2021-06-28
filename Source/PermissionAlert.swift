@@ -127,7 +127,7 @@ internal class DeniedAlert: PermissionAlert {
         NotificationCenter.default.addObserver(self, selector: .settingsHandler, name: UIApplication.didBecomeActiveNotification)
         
         if let URL = URL(string: UIApplication.openSettingsURLString) {
-            UIApplication.shared.openURL(URL)
+            UIApplication.shared.open(URL)
         }
     }
 }

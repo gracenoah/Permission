@@ -26,6 +26,7 @@
 import AddressBook
 
 internal extension Permission {
+    @available(iOS, deprecated: 9.0)
     var statusAddressBook: PermissionStatus {
         let status = ABAddressBookGetAuthorizationStatus()
         
@@ -33,9 +34,11 @@ internal extension Permission {
         case .authorized:          return .authorized
         case .restricted, .denied: return .denied
         case .notDetermined:       return .notDetermined
+        @unknown default:          return .notDetermined
         }
     }
     
+    @available(iOS, deprecated: 9.0)
     func requestAddressBook(_ callback: @escaping Callback) {
         ABAddressBookRequestAccessWithCompletion(nil) { _, _ in
             callback(self.statusAddressBook)

@@ -26,6 +26,7 @@
 import ObjectiveC
 private var timerKey: UInt8 = 0
     
+@available(iOS, deprecated: 10.0)
 internal extension Permission {
     private var timer: Timer? {
         get {
