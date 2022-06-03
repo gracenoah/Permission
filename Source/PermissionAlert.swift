@@ -22,6 +22,9 @@
 // SOFTWARE.
 //
 
+import UIKit
+import Foundation
+
 open class PermissionAlert {
     /// The permission.
     fileprivate let permission: Permission

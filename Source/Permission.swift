@@ -25,6 +25,9 @@
 import UserNotifications
 #endif
 
+import UIKit
+import Foundation
+
 open class Permission: NSObject {
     public typealias Callback = (PermissionStatus) -> Void
 

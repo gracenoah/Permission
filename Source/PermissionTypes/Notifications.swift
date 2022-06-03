@@ -23,6 +23,8 @@
 //
 
 #if PERMISSION_NOTIFICATIONS
+import UIKit
+import Foundation
 import ObjectiveC
 private var timerKey: UInt8 = 0
     

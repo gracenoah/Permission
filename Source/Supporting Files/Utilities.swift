@@ -22,6 +22,9 @@
 // SOFTWARE.
 //
 
+import UIKit
+import Foundation
+
 extension UIApplication {
     fileprivate var topViewController: UIViewController? {
         var vc = delegate?.window??.rootViewController

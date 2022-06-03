@@ -25,6 +25,9 @@
 import UserNotifications
 #endif
 
+import UIKit
+import Foundation
+
 public enum PermissionType {
     #if PERMISSION_CONTACTS
     @available(iOS 9.0, *) case contacts
