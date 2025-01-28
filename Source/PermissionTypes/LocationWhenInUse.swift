@@ -27,8 +27,12 @@ import CoreLocation
 
 internal extension Permission {
     var statusLocationWhenInUse: PermissionStatus {
-        guard CLLocationManager.locationServicesEnabled() else { return .disabled }
-        
+        // Calling this method on the main thread caused UI unresponsiveness.
+        // Because `CLLocationManager.authorizationStatus()` was returned `.denied` and was treated
+        // the same as `.disabled`, we're simply removing this method.
+
+        // guard CLLocationManager.locationServicesEnabled() else { return .disabled }
+
         let status = CLLocationManager.authorizationStatus()
         
         switch status {
