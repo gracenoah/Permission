@@ -1,11 +1,11 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.9
 import Foundation
 import PackageDescription
 
 let package = Package(
   name: "Permission",
   platforms: [
-    .iOS(.v11),
+    .iOS(.v17),
   ],
   products: [
     .library(name: "Permission", targets: ["Permission"]),
@@ -19,12 +19,12 @@ let package = Package(
             .define("PERMISSION_CAMERA"),
             .define("PERMISSION_LOCATION"),
             .define("PERMISSION_MICROPHONE"),
-            .define("PERMISSION_MOTION"),
             .define("PERMISSION_USER_NOTIFICATIONS"),
             .define("PERMISSION_SPEECH_RECOGNIZER")
             // .define("PERMISSION_ADDRESS_BOOK"),
             // .define("PERMISSION_CONTACTS"),
             // .define("PERMISSION_EVENTS"),
+            // .define("PERMISSION_MOTION"),
             // .define("PERMISSION_NOTIFICATIONS"),
             // .define("PERMISSION_PHOTOS"),
             // .define("PERMISSION_REMINDERS"),
