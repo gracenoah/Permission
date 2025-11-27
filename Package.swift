@@ -19,12 +19,12 @@ let package = Package(
             .define("PERMISSION_CAMERA"),
             .define("PERMISSION_LOCATION"),
             .define("PERMISSION_MICROPHONE"),
+            .define("PERMISSION_MOTION"),
             .define("PERMISSION_USER_NOTIFICATIONS"),
             .define("PERMISSION_SPEECH_RECOGNIZER")
             // .define("PERMISSION_ADDRESS_BOOK"),
             // .define("PERMISSION_CONTACTS"),
             // .define("PERMISSION_EVENTS"),
-            // .define("PERMISSION_MOTION"),
             // .define("PERMISSION_NOTIFICATIONS"),
             // .define("PERMISSION_PHOTOS"),
             // .define("PERMISSION_REMINDERS"),
